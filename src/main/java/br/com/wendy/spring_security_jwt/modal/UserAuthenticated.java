@@ -6,22 +6,12 @@ import org.springframework.security.core.userdetails.UserDetails;
 import java.util.Collection;
 import java.util.List;
 
-public class UserAuthenticated implements UserDetails {
 
+public class UserAuthenticated implements UserDetails {
     private final User user;
 
-    public UserAuthenticated(User user){
+    public UserAuthenticated(User user) {
         this.user = user;
-    }
-
-    @Override
-    public Collection<? extends GrantedAuthority> getAuthorities() {
-        return List.of(() -> "read");
-    }
-
-    @Override
-    public String getPassword() {
-        return user.getPassword();
     }
 
     @Override
@@ -30,8 +20,18 @@ public class UserAuthenticated implements UserDetails {
     }
 
     @Override
+    public String getPassword() {
+        return user.getPassword();
+    }
+
+    @Override
+    public Collection<? extends GrantedAuthority> getAuthorities() {
+        return List.of(() -> "read");
+    }
+
+    @Override
     public boolean isAccountNonExpired() {
-        return false;
+        return true;
     }
 
     @Override
@@ -48,4 +48,5 @@ public class UserAuthenticated implements UserDetails {
     public boolean isEnabled() {
         return true;
     }
+
 }

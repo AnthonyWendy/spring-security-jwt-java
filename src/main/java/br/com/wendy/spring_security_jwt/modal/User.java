@@ -7,10 +7,8 @@ import org.springframework.data.relational.core.mapping.Table;
 
 @Table("USERS")
 public class User {
-
     @Id
     private String username;
-
     private String password;
 
     public String getUsername() {
@@ -28,4 +26,5 @@ public class User {
     public void setPassword(String password) {
         this.password = password;
     }
+
 }

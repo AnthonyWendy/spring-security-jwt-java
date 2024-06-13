@@ -12,28 +12,33 @@ import java.util.stream.Collectors;
 
 @Service
 public class JwtService {
-
     private final JwtEncoder encoder;
 
     public JwtService(JwtEncoder encoder) {
         this.encoder = encoder;
     }
 
-    public String generateToken(Authentication authentication){
+    public String generateToken(Authentication authentication) {
         Instant now = Instant.now();
-        long expiry = 3600L;
+        long expiry = 36000L;
 
-        String scopes = authentication.getAuthorities().stream()
+        String scope = authentication
+                .getAuthorities().stream()
                 .map(GrantedAuthority::getAuthority)
-                .collect(Collectors.joining(" "));
+                .collect(Collectors
+                        .joining(" "));
 
-        var claims = JwtClaimsSet.builder()
+        JwtClaimsSet claims = JwtClaimsSet.builder()
                 .issuer("spring-security-jwt")
-                .issuedAt(now.plusSeconds(expiry))
+                .issuedAt(now)
+                .expiresAt(now.plusSeconds(expiry))
                 .subject(authentication.getName())
-                .claim("scopes", scopes)
+                .claim("scope", scope)
                 .build();
 
-        return encoder.encode(JwtEncoderParameters.from(claims)).getTokenValue();
+        return encoder.encode(
+                        JwtEncoderParameters.from(claims))
+                .getTokenValue();
     }
+
 }
