@@ -24,9 +24,14 @@ Before you start, make sure you meet the following requirements:
     git clone https://github.com/AnthonyWendy/spring-security-jwt-java.git
 ```
 
-2. Run the command in the root folder of the project to upload the application container
+2. In the project's root directory, build the application container:
 ```
-    docker up
+     docker build -t spring-security-jwt .
+```
+
+3. In the project's root directory, start the application container:
+```
+    docker-compmose up
 ```
 
 
